@@ -1,0 +1,41 @@
+# Scrip Windows
+# Definir las rutas de origen y destino
+$origen = "C:\Ruta\De\La\Carpeta\Origen"
+$destino = "D:\Ruta\De\La\Carpeta\Destino"
+
+# Verificar si la carpeta de destino existe, de lo contrario crearla
+if (!(Test-Path -Path $destino)) {
+    New-Item -ItemType Directory -Path $destino
+}
+
+# Copiar los archivos desde la carpeta de origen a la carpeta de destino
+Copy-Item -Path $origen\* -Destination $destino -Recurse -Force
+
+# Comprobar si la copia de seguridad fue exitosa
+if ($?) {
+    Write-Host "Copia de seguridad completada correctamente."
+} else {
+    Write-Host "Se produjo un error durante la copia de seguridad."
+}
+
+# Scrcip Linux
+#!/bin/bash
+
+# Definir las rutas de origen y destino
+origen="/ruta/de/la/carpeta/origen/"
+destino="/ruta/de/la/carpeta/destino/"
+
+# Verificar si la carpeta de destino existe, de lo contrario crearla
+if [ ! -d "$destino" ]; then
+    mkdir -p "$destino"
+fi
+
+# Realizar la copia de seguridad utilizando rsync
+rsync -av "$origen" "$destino"
+
+# Comprobar si la copia de seguridad fue exitosa
+if [ $? -eq 0 ]; then
+    echo "Copia de seguridad completada correctamente."
+else
+    echo "Se produjo un error durante la copia de seguridad."
+fi
